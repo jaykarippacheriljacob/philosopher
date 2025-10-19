@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 17:51:44 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/10/19 18:14:43 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/10/19 18:17:55 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ int	main(void)
 
 	pthread_create(&thread_1, NULL, count_to_100, NULL);
 	pthread_create(&thread_2, NULL, print_hello, NULL);
-	pthread_join(thread_1, NULL);
-	pthread_join(thread_2, NULL);
+	// S// pthread_join(thread_2, NULL);
 	return (0);
 }
