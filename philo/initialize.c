@@ -1,30 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
+/*   initialize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/19 20:41:27 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/10/19 23:41:01 by jkarippa         ###   ########.fr       */
+/*   Created: 2025/10/19 23:44:04 by jkarippa          #+#    #+#             */
+/*   Updated: 2025/10/20 09:23:47 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
-# include <pthread.h>
-# include <stdio.h>
+#include "philo.h"
 
-/*
-** Defining the mutex usage structure
-*/
-typedef struct s_philo
-{
-	pthread_mutex_t	pilo_lock;
-}					t_philo;
+// C program to check the size of 'long'
+//  data type
+// #include <stdio.h>
 
-/*
-** Function declarations
-*/
-int					arg_checker(int argc, char **argv);
-#endif
+// int	main(void)
+// {
+// 	printf("Size of int = %ld\n", sizeof(int));
+// 	printf("Size of long = %ld\n", sizeof(long));
+// 	printf("Size of long long = %ld", sizeof(long long));
+// }
