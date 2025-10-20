@@ -6,14 +6,14 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 10:27:37 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/10/20 16:55:10 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/10/20 18:29:08 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 /*
-** Fuction for pasing the initial input data to the structure table.
+** Function for pasing the initial input data to the structure table.
 ** It is to be noted that usleep is not precise for short times < 60ms.
 ** convert to s to ms.
 */
@@ -23,7 +23,7 @@ int	parsing(int argc, char **argv, t_table *table)
 		table->nbr_of_times_each_philo_mus_eat = ft_atol(argv[5]);
 	else
 		table->nbr_of_times_each_philo_mus_eat = -1;
-	table->nbr_of_philo = ft_atol(argv[1]) * 1e3;
+	table->nbr_of_philo = ft_atol(argv[1]);
 	table->time_to_die = ft_atol(argv[2]) * 1e3;
 	table->time_to_eat = ft_atol(argv[3]) * 1e3;
 	table->time_to_sleep = ft_atol(argv[4]) * 1e3;
@@ -33,6 +33,18 @@ int	parsing(int argc, char **argv, t_table *table)
 		printf("\033[31mPlease use timestamps larger than 60ms.\n\033[0m");
 		return (1);
 	}
+	return (0);
+}
+
+/*
+** Function for the initializing the table.
+*/
+int	data_init(t_table *table)
+{
+	table->sim_end = false;
+	if (safe_malloc((void **)&table->arr_of_philo, sizeof(t_philo)
+			* table->nbr_of_philo))
+		return (1);
 	return (0);
 }
 

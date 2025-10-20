@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 20:41:27 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/10/20 16:52:25 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/10/20 18:26:30 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_philo
 
 /*
 ** Defining the structure for the table information
+** End_sim if a philo dies or all philo are full
 */
 typedef struct s_table
 {
@@ -60,7 +61,7 @@ typedef struct s_table
 	long				time_to_sleep;
 	long				nbr_of_times_each_philo_mus_eat;
 	long				sim_start;
-	long				sim_end;
+	bool				sim_end;
 	t_fork				*arr_of_fork;
 	t_philo				*arr_of_philo;
 }						t_table;
@@ -72,4 +73,6 @@ int						arg_checker(int argc, char **argv);
 int						parsing(int argc, char **argv, t_table *table);
 long					ft_atol(const char *str);
 int						int_checker(char *n);
+int						safe_malloc(void **ret, size_t bytes);
+int						data_init(t_table *table);
 #endif
