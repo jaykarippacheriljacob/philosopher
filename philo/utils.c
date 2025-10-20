@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 10:43:04 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/10/20 18:07:46 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/10/21 00:35:04 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,30 @@ int	safe_malloc(void **ret, size_t bytes)
 		return (1);
 	}
 	return (0);
+}
+
+/*
+** Helper function for dealing with errors from mutex uses
+*/
+static int	handle_mutex_error(int status, t_opcode code)
+{
+	if (status == 0)
+		return (0);
+}
+
+/*
+** Utility function for safe handling of mutex
+*/
+void	safe_mutex(pthread_mutex_t *mutex, t_opcode code)
+{
+	if (code == LOCK)
+		pthread_mutex_lock(mutex);
+	else if (code == UNLOCK)
+		pthread_mutex_unlock(mutex);
+	else if (code == INIT)
+		pthread_mutex_init(mutex, NULL);
+	else if (code == DESTROY)
+		pthread_mutex_destroy(mutex);
+	else
+		printf("Wrong opcode for the mutex handle");
 }

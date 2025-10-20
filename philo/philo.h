@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 20:41:27 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/10/20 18:26:30 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/10/20 18:36:58 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,19 @@
 # include <sys/time.h>
 # include <unistd.h>
 
+/*
+** OPCODE for mutex | thread functions
+*/
+typedef enum e_opcode
+{
+	LOCK,
+	UNLOCK,
+	INIT,
+	DESTROY,
+	CREATE,
+	JOIN,
+	DETACH
+}						t_opcode;
 /*
 ** Defining the structure for induvidual fork
 */
