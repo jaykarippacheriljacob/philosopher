@@ -1,24 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   initialize.c                                       :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/19 23:44:04 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/10/20 09:23:47 by jkarippa         ###   ########.fr       */
+/*   Created: 2025/10/20 10:43:04 by jkarippa          #+#    #+#             */
+/*   Updated: 2025/10/20 10:43:28 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+/*
+** Utility function to convert ASCII to long int
+*/
+long	ft_atol(const char *str)
+{
+	int		sign;
+	long	result;
 
-// C program to check the size of 'long'
-//  data type
-// #include <stdio.h>
-
-// int	main(void)
-// {
-// 	printf("Size of int = %ld\n", sizeof(int));
-// 	printf("Size of long = %ld\n", sizeof(long));
-// 	printf("Size of long long = %ld", sizeof(long long));
-// }
+	sign = 1;
+	result = 0;
+	while (*str == ' ' || (*str >= 9 && *str <= 13))
+		str++;
+	if (*str == '-' || *str == '+')
+	{
+		if (*str == '-')
+			sign = -1;
+		str++;
+	}
+	while (*str >= '0' && *str <= '9')
+	{
+		result = result * 10 + (*str - '0');
+		str++;
+	}
+	return (result * sign);
+}

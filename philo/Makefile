@@ -5,7 +5,8 @@ BNAME	=
 CC	=	cc
 CFLAGS	=	-Wall -Wextra -Werror -pthread
 # Source files
-SRC	=	philo.c	error_handling.c	initialize.c
+SRC	=	philo.c	error_handling.c	parsing.c	\
+		utils.c
 BSRC	= 
 # Object files
 OBJ	=	$(SRC:.c=.o)

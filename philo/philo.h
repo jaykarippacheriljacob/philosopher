@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 20:41:27 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/10/20 10:19:18 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/10/20 11:27:38 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,7 @@ typedef struct s_table
 ** Function declarations
 */
 int						arg_checker(int argc, char **argv);
+void					parsing(int argc, char **argv, t_table *table);
+long					ft_atol(const char *str);
+int						int_checker(char *n);
 #endif
