@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 10:27:37 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/10/27 17:32:09 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/10/27 20:22:16 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,14 @@ int	data_init(t_table *table)
 	int	i;
 
 	table->sim_end = false;
+	table->all_threads_ready = false;
 	if (safe_malloc((void **)&table->arr_of_philo, sizeof(t_philo)
 			* table->nbr_of_philo))
 		return (1);
 	if (safe_malloc((void **)&table->arr_of_fork, sizeof(t_fork)
 			* table->nbr_of_philo))
+		return (1);
+	if ((safe_mutex(&table->table_mutex, INIT)))
 		return (1);
 	i = 0;
 	while (i < table->nbr_of_philo)

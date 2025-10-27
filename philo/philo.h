@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 20:41:27 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/10/27 18:25:45 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/10/27 20:21:03 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ typedef struct s_table
 	long				nbr_of_times_each_philo_mus_eat;
 	long				sim_start;
 	bool				sim_end;
+	bool				all_threads_ready;
+	pthread_mutex_t		table_mutex;
 	t_fork				*arr_of_fork;
 	t_philo				*arr_of_philo;
 }						t_table;
