@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 10:43:04 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/10/21 00:35:04 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/10/27 10:27:04 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ long	ft_atol(const char *str)
 }
 
 /*
-** Utility function for safe allocation of malloc
+** Utility wrapper function for safe allocation of malloc
 */
 int	safe_malloc(void **ret, size_t bytes)
 {
@@ -59,21 +59,36 @@ static int	handle_mutex_error(int status, t_opcode code)
 {
 	if (status == 0)
 		return (0);
+	if (EINVAL == status && (LOCK == code || UNLOCK == code))
+		return (printf("The value specified by mutex is invalid"));
+	else if (EINVAL == status && INIT == code)
+		return (printf("The value specified by the attribute is invalid"));
+	else if (EDEADLK == status)
+		return (printf("Deadlk would occur if thread blocked waits for mutex"));
+	else if (EPERM == status)
+		return (printf("Current thread does not hold lock on mutex"));
+	else if (ENOMEM == status)
+		return (printf("Process can't allocate enough memory for new mutex"));
+	else
+		return (printf("Mutex is locked"));
 }
 
 /*
-** Utility function for safe handling of mutex
+** Utility wrapper function for safe handling of mutex
 */
-void	safe_mutex(pthread_mutex_t *mutex, t_opcode code)
+int	safe_mutex(pthread_mutex_t *mutex, t_opcode code)
 {
+	int	status;
+
 	if (code == LOCK)
-		pthread_mutex_lock(mutex);
+		status = handle_mutex_error(pthread_mutex_lock(mutex), code);
 	else if (code == UNLOCK)
-		pthread_mutex_unlock(mutex);
+		status = handle_mutex_error(pthread_mutex_unlock(mutex), code);
 	else if (code == INIT)
-		pthread_mutex_init(mutex, NULL);
+		status = handle_mutex_error(pthread_mutex_init(mutex, NULL), code);
 	else if (code == DESTROY)
-		pthread_mutex_destroy(mutex);
+		status = handle_mutex_error(pthread_mutex_destroy(mutex), code);
 	else
-		printf("Wrong opcode for the mutex handle");
+		status = printf("Wrong opcode for the mutex handle");
+	return (status);
 }

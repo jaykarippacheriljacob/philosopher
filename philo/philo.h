@@ -6,12 +6,13 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 20:41:27 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/10/20 18:36:58 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/10/27 10:33:13 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
+# include <errno.h>
 # include <limits.h>
 # include <pthread.h>
 # include <stdbool.h>
@@ -88,4 +89,7 @@ long					ft_atol(const char *str);
 int						int_checker(char *n);
 int						safe_malloc(void **ret, size_t bytes);
 int						data_init(t_table *table);
+int						safe_mutex(pthread_mutex_t *mutex, t_opcode code);
+int						safe_thread(pthread_t *thread, void *(*func)(void *),
+							void *data, t_opcode code);
 #endif
