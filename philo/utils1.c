@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 10:43:04 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/10/27 10:27:04 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/10/27 11:55:12 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,24 @@ int	safe_malloc(void **ret, size_t bytes)
 		return (1);
 	}
 	return (0);
+}
+
+/*
+** Utility function for deallocation of the memory upon error / termination of
+** the program
+*/
+void	terminate(t_table *table)
+{
+	if (table->arr_of_fork)
+	{
+		free(table->arr_of_fork);
+		printf("\nDeallocated memory for the array of forks in the table");
+	}
+	if (table->arr_of_philo)
+	{
+		free(table->arr_of_philo);
+		printf("\nDeallocated memory for the array of philosopher in the table");
+	}
 }
 
 /*

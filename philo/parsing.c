@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 10:27:37 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/10/20 18:29:08 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/10/27 14:53:03 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,72 @@ int	parsing(int argc, char **argv, t_table *table)
 }
 
 /*
+** Helper function to assign forks to each philosopher
+*/
+void	assign_fork(t_philo *philo, t_fork *fork)
+{
+	int	n;
+	int	i;
+
+	n = philo->table->nbr_of_philo;
+	i = philo->philo_id - 1;
+	if (philo->philo_id % 2 == 0)
+	{
+		philo->lft_fork = &fork[i];
+		philo->rgt_fork = &fork[(i + 1) % n];
+	}
+	else
+	{
+		philo->rgt_fork = &fork[i];
+		philo->lft_fork = &fork[(i + 1) % n];
+	}
+}
+
+/*
+** Helper function for initializing each philosopher from the array of
+** philosohpers
+*/
+static int	philo_init(t_table *table)
+{
+	t_philo	*philo;
+	int		i;
+
+	i = 0;
+	while (i < table->nbr_of_philo)
+	{
+		philo = table->arr_of_philo + 1;
+		philo->full = false;
+		philo->meal_counter = 0;
+		philo->philo_id = i + 1;
+		philo->table = table;
+		assign_fork(philo, table->arr_of_fork);
+		i++;
+	}
+}
+
+/*
 ** Function for the initializing the table.
 */
 int	data_init(t_table *table)
 {
+	int	i;
+
 	table->sim_end = false;
 	if (safe_malloc((void **)&table->arr_of_philo, sizeof(t_philo)
 			* table->nbr_of_philo))
 		return (1);
+	if (safe_malloc((void **)&table->arr_of_fork, sizeof(t_fork)
+			* table->nbr_of_philo))
+		return (1);
+	i = 0;
+	while (i < table->nbr_of_philo)
+	{
+		if (!(safe_mutex(&table->arr_of_fork[i].fork, INIT)))
+			return (1);
+		table->arr_of_fork[i].fork_id = i + 1;
+		i++;
+	}
+	philo_init(table);
 	return (0);
 }
 

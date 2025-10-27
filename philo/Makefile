@@ -6,7 +6,7 @@ CC	=	cc
 CFLAGS	=	-Wall -Wextra -Werror -pthread
 # Source files
 SRC	=	philo.c	error_handling.c	parsing.c	\
-		utils.c
+		utils1.c	utils2.c
 BSRC	= 
 # Object files
 OBJ	=	$(SRC:.c=.o)

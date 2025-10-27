@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 22:19:01 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/10/27 10:33:06 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/10/27 12:06:06 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	handle_thread_error(int status, t_opcode code)
 		return (printf("Value specified by the thread is not joinable"));
 	else if (status == ESRCH)
 		return (printf("No thread for the specified thread id"));
-	else if (status == EDEADLK)
+	else
 		return (printf("Deadlock occured"));
 }
 

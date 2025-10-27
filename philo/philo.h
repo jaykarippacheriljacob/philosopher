@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 20:41:27 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/10/27 10:33:13 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/10/27 12:00:01 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,16 +79,21 @@ typedef struct s_table
 	t_fork				*arr_of_fork;
 	t_philo				*arr_of_philo;
 }						t_table;
-
 /*
 ** Function declarations
 */
+
 int						arg_checker(int argc, char **argv);
 int						parsing(int argc, char **argv, t_table *table);
 long					ft_atol(const char *str);
 int						int_checker(char *n);
-int						safe_malloc(void **ret, size_t bytes);
 int						data_init(t_table *table);
+void					terminate(t_table *table);
+/*
+** Wrapper functions for safe use of  malloc, mutex and threads.
+*/
+
+int						safe_malloc(void **ret, size_t bytes);
 int						safe_mutex(pthread_mutex_t *mutex, t_opcode code);
 int						safe_thread(pthread_t *thread, void *(*func)(void *),
 							void *data, t_opcode code);
