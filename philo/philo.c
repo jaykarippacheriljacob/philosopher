@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 20:35:09 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/10/27 15:48:34 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/10/27 18:26:38 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ int	main(int argc, char **argv)
 			printf("Right_fork = %d\n", philo->rgt_fork->fork_id);
 			i++;
 		}
-		printf("***************************");
+		printf("***************************\n");
+		create_philosopers(&table);
 	}
 	else
 		return (1);

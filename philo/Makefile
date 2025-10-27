@@ -6,7 +6,7 @@
 #    By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/27 15:25:06 by jkarippa          #+#    #+#              #
-#    Updated: 2025/10/27 15:25:11 by jkarippa         ###   ########.fr        #
+#    Updated: 2025/10/27 17:44:25 by jkarippa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CC	=	cc
 CFLAGS	=	-Wall -Wextra -Werror -pthread
 # Source files
 SRC	=	philo.c	error_handling.c	parsing.c	\
-		utils1.c	utils2.c
+		utils1.c	utils2.c	simulation.c
 BSRC	= 
 # Object files
 OBJ	=	$(SRC:.c=.o)

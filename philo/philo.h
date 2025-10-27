@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 20:41:27 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/10/27 12:00:01 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/10/27 18:25:45 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ long					ft_atol(const char *str);
 int						int_checker(char *n);
 int						data_init(t_table *table);
 void					terminate(t_table *table);
+void					create_philosopers(t_table *table);
 /*
 ** Wrapper functions for safe use of  malloc, mutex and threads.
 */
