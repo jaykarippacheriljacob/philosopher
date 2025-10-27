@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 10:27:37 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/10/27 14:53:03 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/10/27 17:32:09 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	assign_fork(t_philo *philo, t_fork *fork)
 ** Helper function for initializing each philosopher from the array of
 ** philosohpers
 */
-static int	philo_init(t_table *table)
+static void	philo_init(t_table *table)
 {
 	t_philo	*philo;
 	int		i;
@@ -70,7 +70,7 @@ static int	philo_init(t_table *table)
 	i = 0;
 	while (i < table->nbr_of_philo)
 	{
-		philo = table->arr_of_philo + 1;
+		philo = &table->arr_of_philo[i];
 		philo->full = false;
 		philo->meal_counter = 0;
 		philo->philo_id = i + 1;
@@ -97,7 +97,7 @@ int	data_init(t_table *table)
 	i = 0;
 	while (i < table->nbr_of_philo)
 	{
-		if (!(safe_mutex(&table->arr_of_fork[i].fork, INIT)))
+		if ((safe_mutex(&table->arr_of_fork[i].fork, INIT)))
 			return (1);
 		table->arr_of_fork[i].fork_id = i + 1;
 		i++;
