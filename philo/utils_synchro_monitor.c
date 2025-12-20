@@ -6,26 +6,26 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 16:36:27 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/12/20 18:12:19 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/12/20 18:15:52 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	set_bool(t_mutex *mutex, bool *dest, bool value)
+void	set_bool(pthread_mutex_t *mutex, bool *dest, bool value)
 {
-	safe_mutex(&mutex->lock, LOCK);
+	safe_mutex(mutex, LOCK);
 	*dest = value;
-	safe_mutex(&mutex->lock, UNLOCK);
+	safe_mutex(mutex, UNLOCK);
 }
 
-bool	get_bool(t_mutex *mutex, bool *src)
+bool	get_bool(pthread_mutex_t *mutex, bool *src)
 {
 	bool	value;
 
-	safe_mutex(&mutex->lock, LOCK);
+	safe_mutex(mutex, LOCK);
 	value = *src;
-	safe_mutex(&mutex->lock, UNLOCK);
+	safe_mutex(mutex, UNLOCK);
 	return (value);
 }
 
