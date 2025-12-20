@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 10:43:04 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/12/20 16:34:46 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/12/20 18:35:44 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,25 @@ void	terminate(t_table *table)
 		free(table->arr_of_philo);
 		printf("\nDeallocated memory for the array of philosopher in the table");
 	}
+}
+
+/*
+** Utility function to get the current time in
+** 1->seconds
+** 2->milliseconds or
+** 3->microseconds
+*/
+long	get_time(int type)
+{
+	struct timeval	time;
+	long			ms_time;
+
+	gettimeofday(&time, NULL);
+	if (type == 1)
+		ms_time = time.tv_sec;
+	else if (type == 2)
+		ms_time = (time.tv_sec * 1e3) + (time.tv_usec / 1e3);
+	else if (type == 3)
+		ms_time = (time.tv_sec * 1e6) + time.tv_usec;
+	return (ms_time);
 }

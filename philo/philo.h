@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 20:41:27 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/12/20 16:12:38 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/12/20 18:36:28 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ int						int_checker(char *n);
 int						data_init(t_table *table);
 void					terminate(t_table *table);
 void					create_philosopers(t_table *table);
+void					wait_all_threads(t_table *table);
 /*
 ** Wrapper functions for safe use of  malloc, mutex and threads.
 */
@@ -101,4 +102,5 @@ int						safe_malloc(void **ret, size_t bytes);
 int						safe_mutex(pthread_mutex_t *mutex, t_opcode code);
 int						safe_thread(pthread_t *thread, void *(*func)(void *),
 							void *data, t_opcode code);
+long					get_time(int type);
 #endif
