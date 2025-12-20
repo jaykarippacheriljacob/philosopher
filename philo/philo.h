@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 20:41:27 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/10/27 20:21:03 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/12/20 16:12:38 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct s_philo
 /*
 ** Defining the structure for the table information
 ** End_sim if a philo dies or all philo are full
+88 table_mutex is to avoid race condition of threads and synchronize them!
 */
 typedef struct s_table
 {

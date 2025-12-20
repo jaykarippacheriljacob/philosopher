@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 10:27:37 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/10/27 20:22:16 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/12/20 15:54:31 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,10 @@ int	parsing(int argc, char **argv, t_table *table)
 
 /*
 ** Helper function to assign forks to each philosopher
+** Here to avoid the dead lock we use the odd even solution. i.e,
+** the philoshoper even take left first and the odd takes the right fork
+** This potentially makes sure that atleast one philosophor is there with out
+** potential deadlock.
 */
 void	assign_fork(t_philo *philo, t_fork *fork)
 {
