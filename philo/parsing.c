@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 10:27:37 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/12/20 15:54:31 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/12/21 14:06:55 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ int	data_init(t_table *table)
 			* table->nbr_of_philo))
 		return (1);
 	if ((safe_mutex(&table->table_mutex, INIT)))
+		return (1);
+	if ((safe_mutex(&table->write_mutex, INIT)))
 		return (1);
 	i = 0;
 	while (i < table->nbr_of_philo)

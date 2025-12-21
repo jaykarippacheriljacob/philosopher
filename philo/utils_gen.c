@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 10:43:04 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/12/20 18:35:44 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/12/20 18:55:18 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ long	get_time(int type)
 	struct timeval	time;
 	long			ms_time;
 
-	gettimeofday(&time, NULL);
+	gettimeofday(&time, NULL); // Check if a checker is needed for error or not.
 	if (type == 1)
 		ms_time = time.tv_sec;
 	else if (type == 2)

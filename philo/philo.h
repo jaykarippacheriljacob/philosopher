@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 20:41:27 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/12/20 18:36:28 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/12/21 14:43:03 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,20 @@
 # include <stdlib.h>
 # include <sys/time.h>
 # include <unistd.h>
+
+/*
+** OPCODE for philosopher status 
+*/
+
+typedef enum e_philostatus
+{
+	FORK_1,
+	FORK_2,	
+	EAT,
+	SLEEP,
+	THINK,
+	DIED
+}						t_philo_status;
 
 /*
 ** OPCODE for mutex | thread functions
@@ -65,8 +79,23 @@ typedef struct s_philo
 
 /*
 ** Defining the structure for the table information
-** End_sim if a philo dies or all philo are full
-88 table_mutex is to avoid race condition of threads and synchronize them!
+**
+** nbr_of_philo: number of philosophers
+** time_to_die: time (ms) before a philosopher dies if not eating
+** time_to_eat: time (ms) a philosopher spends eating
+** time_to_sleep: time (ms) a philosopher spends sleeping
+** nbr_of_times_each_philo_mus_eat: number of meals required per philosopher
+** sim_start: timestamp of simulation start
+**
+** sim_end: boolean indicating if simulation has ended
+**          (a philosopher died or all philosophers are full)
+** all_threads_ready: boolean indicating all threads are ready to start
+**
+** table_mutex: mutex to avoid race conditions while accessing table data
+** write_mutex: mutex to synchronize output to the console
+**
+** arr_of_fork: array of forks
+** arr_of_philo: array of philosophers
 */
 typedef struct s_table
 {
@@ -79,9 +108,11 @@ typedef struct s_table
 	bool				sim_end;
 	bool				all_threads_ready;
 	pthread_mutex_t		table_mutex;
+	pthread_mutex_t		write_mutex;
 	t_fork				*arr_of_fork;
 	t_philo				*arr_of_philo;
 }						t_table;
+
 /*
 ** Function declarations
 */
@@ -102,5 +133,10 @@ int						safe_malloc(void **ret, size_t bytes);
 int						safe_mutex(pthread_mutex_t *mutex, t_opcode code);
 int						safe_thread(pthread_t *thread, void *(*func)(void *),
 							void *data, t_opcode code);
+bool					simulation_finished(t_table *table);
+void					set_bool(pthread_mutex_t *mutex, bool *dest,
+							bool value);
+bool					get_bool(pthread_mutex_t *mutex, bool *src);
+void					write_status(t_philostatus status, t_philo *philo);
 long					get_time(int type);
 #endif
