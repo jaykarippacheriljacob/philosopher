@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 17:43:45 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/12/21 18:18:50 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/12/21 20:36:03 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,18 @@ void	create_philosophers(t_table *table)
 		printf("Lets rock and roll!!!!\n");
 	}
 	table->sim_start = get_time(2);
-	pthread_mutex_lock(&table->table_mutex);
+	safe_mutex(&table->table_mutex, LOCK);
+	printf("table_mutex locked\n");
 	table->all_threads_ready = true;
-	pthread_mutex_unlock(&table->table_mutex);
+	//table->sim_end = true;
+	safe_mutex(&table->table_mutex, UNLOCK);
+	printf("table_mutex unlocked\n");
 	i = 0;
 	while (i < table->nbr_of_philo)
 	{
+		printf("Entered the while loop!\n");
 		safe_thread(&table->arr_of_philo[i].thread_id, NULL, NULL, JOIN);
+		printf("Joining philo %d\n", i);
 		i++;
 	}
 }
@@ -114,7 +119,7 @@ void	*simulate_philo(void *data)
 		eat(philo);
 		//  3. sleep
 		write_status(SLEEP, philo);
-		usleep(philo->table->time_to_sleep);
+		precise_usleep(philo->table->time_to_sleep, philo->table);
 		//  4. think
 		think(philo);
 	}

@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 20:41:27 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/12/21 18:08:45 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/12/21 20:35:46 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ void					wait_all_threads(t_table *table);
 void					write_status(t_philo_status status, t_philo *philo);
 long					get_time(int type);
 void					*simulate_philo(void *data);
+void					precise_usleep(long usec, t_table *table);
 /*
 ** Wrapper functions for safe use of  malloc, mutex and threads.
 */

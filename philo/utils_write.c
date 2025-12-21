@@ -1,16 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Utils_write.c                                      :+:      :+:    :+:   */
+/*   utils_write.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 13:56:17 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/12/21 16:03:14 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/12/21 20:38:53 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+/*
+** Utility function for precise usleep as the standard one causes deadlocks
+** in some cases.
+** 1. usleep the major part of the time, not CPU intensive
+** 2. refine last microsec with spinlock. 
+*/
+void	precise_usleep(long usec, t_table *table)
+{
+	long	start;
+	long	remaining;
+	long	elapsed;
+
+	start = get_time(2);
+	while (get_time(2) - start < usec)
+	{
+		if (simulation_finished(table))
+			break ;
+		elapsed = get_time(2) - start;
+		remaining = usec - elapsed;
+		if (remaining > 1e3)
+			usleep(usec / 2);
+		else
+		{
+			// SPINLOCK
+			while (get_time(2) - start < usec)
+				;
+		}
+	}
+}
 
 /*
 ** Utility function to print the status of a philosopher.
