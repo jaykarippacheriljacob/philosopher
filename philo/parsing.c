@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 10:27:37 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/12/21 15:35:23 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/12/21 21:06:45 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ int	parsing(int argc, char **argv, t_table *table)
 	else
 		table->nbr_of_times_each_philo_mus_eat = -1;
 	table->nbr_of_philo = ft_atol(argv[1]);
-	table->time_to_die = ft_atol(argv[2]) * 1e3;
-	table->time_to_eat = ft_atol(argv[3]) * 1e3;
-	table->time_to_sleep = ft_atol(argv[4]) * 1e3;
-	if (table->time_to_die < 6e4 || table->time_to_eat < 6e4
-		|| table->time_to_sleep < 6e4)
+	table->time_to_die = ft_atol(argv[2]);
+	table->time_to_eat = ft_atol(argv[3]);
+	table->time_to_sleep = ft_atol(argv[4]);
+	if (table->time_to_die < 60 || table->time_to_eat < 60
+		|| table->time_to_sleep < 60)
 	{
 		printf("\033[31mPlease use timestamps larger than 60ms.\n\033[0m");
 		return (1);

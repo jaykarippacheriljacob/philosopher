@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 17:43:45 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/12/21 20:36:03 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/12/21 21:08:04 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static void	eat(t_philo *philo)
 	philo->meal_counter++;
 	safe_mutex(&philo->philo_mutex, UNLOCK);
 	write_status(EAT, philo);
-	usleep(philo->table->time_to_eat);
+	usleep(philo->table->time_to_eat * 1000);
 	if (philo->table->nbr_of_times_each_philo_mus_eat > 0
 		&& philo->meal_counter >= philo->table->nbr_of_times_each_philo_mus_eat)
 	{
@@ -112,15 +112,11 @@ void	*simulate_philo(void *data)
 	wait_all_threads(philo->table);
 	while (!simulation_finished(philo->table))
 	{
-		//  1. Am i full?
 		if (philo->full)
 			break ;
-		//  2. eat
 		eat(philo);
-		//  3. sleep
 		write_status(SLEEP, philo);
 		precise_usleep(philo->table->time_to_sleep, philo->table);
-		//  4. think
 		think(philo);
 	}
 	return (NULL);

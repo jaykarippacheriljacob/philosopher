@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 13:56:17 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/12/21 20:38:53 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/12/21 21:09:18 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,25 +18,24 @@
 ** 1. usleep the major part of the time, not CPU intensive
 ** 2. refine last microsec with spinlock. 
 */
-void	precise_usleep(long usec, t_table *table)
+void	precise_usleep(long msec, t_table *table)
 {
 	long	start;
 	long	remaining;
 	long	elapsed;
 
 	start = get_time(2);
-	while (get_time(2) - start < usec)
+	while (get_time(2) - start < msec)
 	{
 		if (simulation_finished(table))
 			break ;
 		elapsed = get_time(2) - start;
-		remaining = usec - elapsed;
-		if (remaining > 1e3)
-			usleep(usec / 2);
+		remaining = msec - elapsed;
+		if (remaining > 10)
+			usleep((remaining / 2) * 1000);
 		else
 		{
-			// SPINLOCK
-			while (get_time(2) - start < usec)
+			while (get_time(2) - start < msec)
 				;
 		}
 	}
@@ -55,10 +54,10 @@ void	write_status(t_philo_status status, t_philo *philo)
 	long	time_elapsed;
 	bool	sim_finished;
 
-	time_elapsed = get_time(1) - philo->table->sim_start;
+	time_elapsed = get_time(2) - philo->table->sim_start;
 	sim_finished = simulation_finished(philo->table);
 	safe_mutex(&philo->table->write_mutex, LOCK);
-	if (!sim_finished)
+	if (sim_finished)
 	{
 		safe_mutex(&philo->table->write_mutex, UNLOCK);
 		return ;
