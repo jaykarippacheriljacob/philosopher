@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 10:43:04 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/12/20 18:55:18 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/12/21 18:17:17 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ long	get_time(int type)
 		ms_time = time.tv_sec;
 	else if (type == 2)
 		ms_time = (time.tv_sec * 1e3) + (time.tv_usec / 1e3);
-	else if (type == 3)
+	else
 		ms_time = (time.tv_sec * 1e6) + time.tv_usec;
 	return (ms_time);
 }

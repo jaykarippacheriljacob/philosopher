@@ -6,7 +6,7 @@
 #    By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/27 15:25:06 by jkarippa          #+#    #+#              #
-#    Updated: 2025/12/21 16:38:46 by jkarippa         ###   ########.fr        #
+#    Updated: 2025/12/21 18:15:47 by jkarippa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ CFLAGS	=	-Wall -Wextra -Werror -pthread
 # Source files
 SRC	=	philo.c	error_handling.c	parsing.c	\
 		utils_write.c	utils_synchro_monitor.c	simulation.c	\
-		utils_wrapper.c utils_gen.c
+		utils_wrapper_fn.c utils_gen.c
 BSRC	= 
 # Object files
 OBJ	=	$(SRC:.c=.o)

@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 17:43:45 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/12/21 18:08:33 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/12/21 18:18:50 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,4 +118,5 @@ void	*simulate_philo(void *data)
 		//  4. think
 		think(philo);
 	}
+	return (NULL);
 }
