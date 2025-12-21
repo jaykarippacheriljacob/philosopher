@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 17:43:45 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/12/21 16:01:37 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/12/21 18:08:33 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 ** Function to initialize the threads, which are the philosophers of the
 ** simulation
 */
-void	create_philosopers(t_table *table)
+void	create_philosophers(t_table *table)
 {
 	int	i;
 
@@ -31,7 +31,7 @@ void	create_philosopers(t_table *table)
 		i = 0;
 		while (i < table->nbr_of_philo)
 		{
-			safe_thread(&table->arr_of_philo[i], simulate_philo,
+			safe_thread(&table->arr_of_philo[i].thread_id, simulate_philo,
 				&table->arr_of_philo[i], CREATE);
 			i++;
 		}
@@ -44,7 +44,7 @@ void	create_philosopers(t_table *table)
 	i = 0;
 	while (i < table->nbr_of_philo)
 	{
-		safe_thread(&table->arr_of_philo[i], NULL, NULL, JOIN);
+		safe_thread(&table->arr_of_philo[i].thread_id, NULL, NULL, JOIN);
 		i++;
 	}
 }
@@ -105,7 +105,7 @@ void	*simulate_philo(void *data)
 
 	philo = (t_philo *)data;
 	wait_all_threads(philo->table);
-	while (!simulaion_finished(philo->table))
+	while (!simulation_finished(philo->table))
 	{
 		//  1. Am i full?
 		if (philo->full)
