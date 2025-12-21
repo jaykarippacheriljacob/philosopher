@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 17:43:45 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/12/20 18:53:57 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/12/21 16:01:37 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,53 @@ void	create_philosopers(t_table *table)
 	}
 }
 
+// long	set_long(pthread_mutex_t *mutex, long *value)
+// {
+// 	long	ret;
+
+// 	safe_mutex(mutex, LOCK);
+// 	ret = *value;
+// 	safe_mutex(mutex, UNLOCK);
+// 	return (ret);
+// }
+
+/*
+**	Function for the eat routine of a philosopher
+** 1. pick up forks (lock mutexes)
+** 2. write status, update last meal time, update meal counter and check if full
+** 3. release forks (unlock mutexes)
+*/
+static void	eat(t_philo *philo)
+{
+	safe_mutex(&philo->lft_fork->fork, LOCK);
+	write_status(FORK_1, philo);
+	safe_mutex(&philo->rgt_fork->fork, LOCK);
+	write_status(FORK_2, philo);
+	safe_mutex(&philo->philo_mutex, LOCK);
+	philo->last_meal_time = get_time(2);
+	philo->meal_counter++;
+	safe_mutex(&philo->philo_mutex, UNLOCK);
+	write_status(EAT, philo);
+	usleep(philo->table->time_to_eat);
+	if (philo->table->nbr_of_times_each_philo_mus_eat > 0
+		&& philo->meal_counter >= philo->table->nbr_of_times_each_philo_mus_eat)
+	{
+		safe_mutex(&philo->philo_mutex, LOCK);
+		philo->full = true;
+		safe_mutex(&philo->philo_mutex, UNLOCK);
+	}
+	safe_mutex(&philo->lft_fork->fork, UNLOCK);
+	safe_mutex(&philo->rgt_fork->fork, UNLOCK);
+}
+
+/*
+** Function for the think routine of a philosopher 
+*/
+static void	think(t_philo *philo)
+{
+	write_status(THINK, philo);
+}
+
 /*
 ** Function to simulate the dinning problem
 */
@@ -58,11 +105,17 @@ void	*simulate_philo(void *data)
 
 	philo = (t_philo *)data;
 	wait_all_threads(philo->table);
-	while(!simulaion_finished(philo->table))
+	while (!simulaion_finished(philo->table))
 	{
 		//  1. Am i full?
+		if (philo->full)
+			break ;
 		//  2. eat
+		eat(philo);
 		//  3. sleep
+		write_status(SLEEP, philo);
+		usleep(philo->table->time_to_sleep);
 		//  4. think
+		think(philo);
 	}
 }

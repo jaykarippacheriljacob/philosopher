@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 13:56:17 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/12/21 14:54:06 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/12/21 16:03:14 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,17 @@ void	write_status(t_philo_status status, t_philo *philo)
 		return ;
 	}
 	if (status == FORK_1 || status == FORK_2)
-		printf("%ld Philosopher %d has taken a fork\n", time_elapsed,
+		printf("%ld %d has taken a fork\n", time_elapsed,
 			philo->philo_id);
 	else if (status == EAT)
-		printf("%ld Philosopher %d is eating\n", time_elapsed, philo->philo_id);
+		printf("%ld %d is eating\n", time_elapsed, philo->philo_id);
 	else if (status == SLEEP)
-		printf("%ld Philosopher %d is sleeping\n", time_elapsed,
+		printf("%ld %d is sleeping\n", time_elapsed,
 			philo->philo_id);
 	else if (status == THINK)
-		printf("%ld Philosopher %d is thinking\n", time_elapsed,
+		printf("%ld %d is thinking\n", time_elapsed,
 			philo->philo_id);
 	else if (status == DIED)
-		printf("%ld Philosopher %d died\n", time_elapsed, philo->philo_id);
+		printf("%ld %d died\n", time_elapsed, philo->philo_id);
 	safe_mutex(&philo->table->write_mutex, UNLOCK);
 }

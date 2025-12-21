@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 20:35:09 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/10/27 18:26:38 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/12/21 16:07:47 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	main(int argc, char **argv)
 		}
 		printf("***************************\n");
 		create_philosopers(&table);
+		simulate_philo(philo);
 	}
 	else
 		return (1);

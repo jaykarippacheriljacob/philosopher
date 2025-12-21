@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 20:41:27 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/12/21 14:43:03 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/12/21 16:06:40 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,16 @@ typedef enum e_opcode
 	DETACH
 }						t_opcode;
 /*
-** Defining the structure for induvidual fork
+** Structure representing an individual fork.
+**
+** fork_id : Unique ID of the fork
+** fork    : Mutex to protect access to this fork
 */
 typedef struct s_fork
 {
-	int					fork_id;
-	pthread_mutex_t		fork;
-}						t_fork;
+	int				fork_id;
+	pthread_mutex_t	fork;
+}					t_fork;
 
 /*
 ** Structure declaration
@@ -63,19 +66,29 @@ typedef struct s_fork
 typedef struct s_table	t_table;
 
 /*
-** Defining the structure for induvidual philosopher
+** Structure representing an individual philosopher.
+**
+** philo_id             : Unique ID of the philosopher
+** thread_id            : The thread representing this philosopher
+** table                : Pointer to the shared table structure
+** lft_fork, rgt_fork   : Pointers to the left and right forks
+** meal_counter         : Number of times the philosopher has eaten
+** last_meal_time       : Timestamp of the last meal
+** full                 : Indicates if the philosopher is full
+** philo_mutex          : Mutex for protecting philosopher-specific data
 */
 typedef struct s_philo
 {
-	int					philo_id;
-	pthread_t			thread_id;
-	t_table				*table;
-	t_fork				*lft_fork;
-	t_fork				*rgt_fork;
-	long				meal_counter;
-	long				last_meal_time;
-	int					full;
-}						t_philo;
+	int				philo_id;
+	pthread_t		thread_id;
+	t_table			*table;
+	t_fork			*lft_fork;
+	t_fork			*rgt_fork;
+	long			meal_counter;
+	long			last_meal_time;
+	int				full;
+	pthread_mutex_t	philo_mutex;
+}					t_philo;
 
 /*
 ** Defining the structure for the table information
@@ -125,6 +138,9 @@ int						data_init(t_table *table);
 void					terminate(t_table *table);
 void					create_philosopers(t_table *table);
 void					wait_all_threads(t_table *table);
+void					write_status(t_philo_status status, t_philo *philo);
+long					get_time(int type);
+void					*simulate_philo(void *data);
 /*
 ** Wrapper functions for safe use of  malloc, mutex and threads.
 */
@@ -137,6 +153,4 @@ bool					simulation_finished(t_table *table);
 void					set_bool(pthread_mutex_t *mutex, bool *dest,
 							bool value);
 bool					get_bool(pthread_mutex_t *mutex, bool *src);
-void					write_status(t_philostatus status, t_philo *philo);
-long					get_time(int type);
 #endif

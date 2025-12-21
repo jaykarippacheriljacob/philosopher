@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 10:27:37 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/12/21 14:06:55 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/12/21 15:35:23 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ static void	philo_init(t_table *table)
 		philo->philo_id = i + 1;
 		philo->table = table;
 		assign_fork(philo, table->arr_of_fork);
+		safe_mutex(&philo->philo_mutex, INIT);
 		i++;
 	}
 }
