@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 17:43:45 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/12/28 13:14:34 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/12/28 14:30:46 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,8 @@ void	*simulate_philo(void *data)
 			break ;
 		eat(philo);
 		write_status(SLEEP, philo);
-		precise_usleep(philo->table->time_to_sleep, philo->table);
+		usleep(philo->table->time_to_sleep * 1000);
+		// precise_usleep(philo->table->time_to_sleep, philo->table);
 		think(philo);
 	}
 	return (NULL);
