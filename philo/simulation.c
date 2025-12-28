@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 17:43:45 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/12/28 11:50:12 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/12/28 12:03:31 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	create_philosophers(t_table *table)
 	else if (table->nbr_of_philo <= 0)
 		return ;
 	else if (table->nbr_of_philo == 1)
-		return ;
+		printf("Ohoooooo only 1 philo so only 1 fork!!! I will die!!!!\n");
 	else
 	{
 		i = 0;
