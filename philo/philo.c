@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 20:35:09 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/12/28 12:47:20 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/12/28 12:47:54 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(int argc, char **argv)
 			terminate(&table);
 			return (1);
 		}
-		create_n_dinephilosophers(&table);
+		create_n_dine_philosophers(&table);
 	}
 	else
 		return (1);
