@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 17:43:45 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/12/28 12:03:31 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/12/28 12:22:14 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ static void	eat(t_philo *philo)
 static void	think(t_philo *philo)
 {
 	write_status(THINK, philo);
+	usleep(THINK_TIME);
 }
 
 /*
