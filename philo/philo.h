@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 20:41:27 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/12/28 12:47:08 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/12/28 13:07:28 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ typedef struct s_philo
 **          (a philosopher died or all philosophers are full)
 ** all_threads_ready: boolean indicating all threads are ready to start
 **
+** monitor: thread actually searching for the death of the philosopher.
+**
 ** table_mutex: mutex to avoid race conditions while accessing table data
 ** write_mutex: mutex to synchronize output to the console
 **
@@ -121,6 +123,7 @@ typedef struct s_table
 	long				sim_start;
 	bool				sim_end;
 	bool				all_threads_ready;
+	pthread_t			monitor;
 	pthread_mutex_t		table_mutex;
 	pthread_mutex_t		write_mutex;
 	t_fork				*arr_of_fork;
@@ -152,7 +155,4 @@ int						safe_mutex(pthread_mutex_t *mutex, t_opcode code);
 int						safe_thread(pthread_t *thread, void *(*func)(void *),
 							void *data, t_opcode code);
 bool					simulation_finished(t_table *table);
-void					set_bool(pthread_mutex_t *mutex, bool *dest,
-							bool value);
-bool					get_bool(pthread_mutex_t *mutex, bool *src);
 #endif

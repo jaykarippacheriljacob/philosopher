@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 16:36:27 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/12/21 14:27:18 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/12/28 13:14:09 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,25 @@
 /*
 ** Setter function to safely set the boolean value with mutex lock 
 */
-void	set_bool(pthread_mutex_t *mutex, bool *dest, bool value)
-{
-	safe_mutex(mutex, LOCK);
-	*dest = value;
-	safe_mutex(mutex, UNLOCK);
-}
+// void	set_bool(pthread_mutex_t *mutex, bool *dest, bool value)
+// {
+// 	safe_mutex(mutex, LOCK);
+// 	*dest = value;
+// 	safe_mutex(mutex, UNLOCK);
+// }
 
 /*
 ** Getter function to safely get the boolean value with mutex lock 
 */
-bool	get_bool(pthread_mutex_t *mutex, bool *src)
-{
-	bool	value;
+// bool	get_bool(pthread_mutex_t *mutex, bool *src)
+// {
+// 	bool	value;
 
-	safe_mutex(mutex, LOCK);
-	value = *src;
-	safe_mutex(mutex, UNLOCK);
-	return (value);
-}
+// 	safe_mutex(mutex, LOCK);
+// 	value = *src;
+// 	safe_mutex(mutex, UNLOCK);
+// 	return (value);
+// }
 
 /*
 ** Function to check if the simulation has finished
@@ -41,8 +41,17 @@ bool	get_bool(pthread_mutex_t *mutex, bool *src)
 */
 bool	simulation_finished(t_table *table)
 {
-	return (get_bool(&table->table_mutex, &table->sim_end));
+	bool	finished;
+
+	safe_mutex(&table->table_mutex, LOCK);
+	finished = table->sim_end;
+	safe_mutex(&table->table_mutex, UNLOCK);
+	return (finished);
 }
+// bool	simulation_finished(t_table *table)
+// {
+// 	return (get_bool(&table->table_mutex, &table->sim_end));
+// }
 
 /*
 ** SpinLock to synchornize all philosophers to start at the same time

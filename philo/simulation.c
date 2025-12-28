@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 17:43:45 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/12/28 12:46:50 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/12/28 13:14:34 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	create_n_dine_philosophers(t_table *table)
 			safe_thread(&table->arr_of_philo[i].thread_id, simulate_philo,
 				&table->arr_of_philo[i], CREATE);
 	}
+	// Monitoring the philosophers in a separate function
+	// safe_thread(&table->monitor, monitor_philo, table, CREATE);
 	table->sim_start = get_time(2);
 	safe_mutex(&table->table_mutex, LOCK);
 	table->all_threads_ready = true;
