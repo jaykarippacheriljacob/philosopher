@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 10:43:04 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/12/21 18:17:17 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/12/28 11:45:14 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,16 +59,25 @@ int	safe_malloc(void **ret, size_t bytes)
 void	terminate(t_table *table)
 {
 	if (table->arr_of_fork)
-	{
 		free(table->arr_of_fork);
-		printf("\nDeallocated memory for the array of forks in the table");
-	}
 	if (table->arr_of_philo)
-	{
 		free(table->arr_of_philo);
-		printf("\nDeallocated memory for the array of philosopher in the table");
-	}
 }
+// void	terminate(t_table *table)
+// {
+// 	if (table->arr_of_fork)
+// 	{
+// 		free(table->arr_of_fork);
+// 		printf("\033[32m\nDeallocated memory for the array of forks in the
+// table\033[0m");
+// 	}
+// 	if (table->arr_of_philo)
+// 	{
+// 		free(table->arr_of_philo);
+// 		printf("\033[32m\nDeallocated memory for the array of philosopher in the 
+// table\033[0m");
+// 	}
+// }
 
 /*
 ** Utility function to get the current time in
@@ -81,7 +90,7 @@ long	get_time(int type)
 	struct timeval	time;
 	long			ms_time;
 
-	gettimeofday(&time, NULL); // Check if a checker is needed for error or not.
+	gettimeofday(&time, NULL);
 	if (type == 1)
 		ms_time = time.tv_sec;
 	else if (type == 2)
@@ -90,3 +99,17 @@ long	get_time(int type)
 		ms_time = (time.tv_sec * 1e6) + time.tv_usec;
 	return (ms_time);
 }
+// long	get_time(int type)
+// {
+// 	struct timeval	time;
+// 	long			ms_time;
+
+// 	gettimeofday(&time, NULL); // Check if a checker is needed for error or not.
+// 	if (type == 1)
+// 		ms_time = time.tv_sec;
+// 	else if (type == 2)
+// 		ms_time = (time.tv_sec * 1e3) + (time.tv_usec / 1e3);
+// 	else
+// 		ms_time = (time.tv_sec * 1e6) + time.tv_usec;
+// 	return (ms_time);
+// }

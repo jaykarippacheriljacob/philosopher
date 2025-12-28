@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 17:43:45 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/12/21 21:08:04 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/12/28 11:50:12 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	create_philosophers(t_table *table)
 	else if (table->nbr_of_philo <= 0)
 		return ;
 	else if (table->nbr_of_philo == 1)
-		printf("Ohoooooo only 1 philo so only 1 fork!!! I will die!!!!\n");
+		return ;
 	else
 	{
 		i = 0;
@@ -35,24 +35,49 @@ void	create_philosophers(t_table *table)
 				&table->arr_of_philo[i], CREATE);
 			i++;
 		}
-		printf("Lets rock and roll!!!!\n");
 	}
 	table->sim_start = get_time(2);
 	safe_mutex(&table->table_mutex, LOCK);
-	printf("table_mutex locked\n");
 	table->all_threads_ready = true;
-	//table->sim_end = true;
 	safe_mutex(&table->table_mutex, UNLOCK);
-	printf("table_mutex unlocked\n");
-	i = 0;
-	while (i < table->nbr_of_philo)
-	{
-		printf("Entered the while loop!\n");
+	i = -1;
+	while (++i < table->nbr_of_philo)
 		safe_thread(&table->arr_of_philo[i].thread_id, NULL, NULL, JOIN);
-		printf("Joining philo %d\n", i);
-		i++;
-	}
 }
+// void	create_philosophers(t_table *table)
+// {
+// 	int	i;
+
+// 	if (table->nbr_of_times_each_philo_mus_eat == 0)
+// 		return ;
+// 	else if (table->nbr_of_philo <= 0)
+// 		return ;
+// 	else if (table->nbr_of_philo == 1)
+// 		printf("Ohoooooo only 1 philo so only 1 fork!!! I will die!!!!\n");
+// 	else
+// 	{
+// 		i = 0;
+// 		while (i < table->nbr_of_philo)
+// 		{
+// 			safe_thread(&table->arr_of_philo[i].thread_id, simulate_philo,
+// 				&table->arr_of_philo[i], CREATE);
+// 			i++;
+// 		}
+// 		printf("Lets rock and roll!!!!\n");
+// 	}
+// 	table->sim_start = get_time(2);
+// 	safe_mutex(&table->table_mutex, LOCK);
+// 	printf("table_mutex locked\n");
+// 	table->all_threads_ready = true;
+// 	safe_mutex(&table->table_mutex, UNLOCK);
+// 	printf("table_mutex unlocked\n");
+// 	i = 0;
+// 	while (i < table->nbr_of_philo)
+// 	{
+// 		safe_thread(&table->arr_of_philo[i].thread_id, NULL, NULL, JOIN);
+// 		i++;
+// 	}
+// }
 
 // long	set_long(pthread_mutex_t *mutex, long *value)
 // {
