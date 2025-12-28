@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 17:43:45 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/12/28 12:22:14 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/12/28 12:46:50 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 ** Function to initialize the threads, which are the philosophers of the
 ** simulation
 */
-void	create_philosophers(t_table *table)
+void	create_n_dine_philosophers(t_table *table)
 {
 	int	i;
 
@@ -28,13 +28,10 @@ void	create_philosophers(t_table *table)
 		printf("Ohoooooo only 1 philo so only 1 fork!!! I will die!!!!\n");
 	else
 	{
-		i = 0;
-		while (i < table->nbr_of_philo)
-		{
+		i = -1;
+		while (++i < table->nbr_of_philo)
 			safe_thread(&table->arr_of_philo[i].thread_id, simulate_philo,
 				&table->arr_of_philo[i], CREATE);
-			i++;
-		}
 	}
 	table->sim_start = get_time(2);
 	safe_mutex(&table->table_mutex, LOCK);

@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 20:41:27 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/12/28 12:32:33 by jkarippa         ###   ########.fr       */
+/*   Updated: 2025/12/28 12:47:08 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ long					ft_atol(const char *str);
 int						int_checker(char *n);
 int						data_init(t_table *table);
 void					terminate(t_table *table);
-void					create_philosophers(t_table *table);
+void					create_n_dine_philosophers(t_table *table);
 void					wait_all_threads(t_table *table);
 void					write_status(t_philo_status status, t_philo *philo);
 long					get_time(int type);
