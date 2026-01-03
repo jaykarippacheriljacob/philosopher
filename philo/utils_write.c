@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 13:56:17 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/12/21 21:09:18 by jkarippa         ###   ########.fr       */
+/*   Updated: 2026/01/03 11:25:38 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	write_status(t_philo_status status, t_philo *philo)
 	time_elapsed = get_time(2) - philo->table->sim_start;
 	sim_finished = simulation_finished(philo->table);
 	safe_mutex(&philo->table->write_mutex, LOCK);
-	if (sim_finished)
+	if (sim_finished && status != DIED)
 	{
 		safe_mutex(&philo->table->write_mutex, UNLOCK);
 		return ;
