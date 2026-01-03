@@ -94,6 +94,7 @@ int	data_init(t_table *table)
 
 	table->sim_end = false;
 	table->all_threads_ready = false;
+	table->no_of_threads_running = 0;
 	if (safe_malloc((void **)&table->arr_of_philo, sizeof(t_philo)
 			* table->nbr_of_philo))
 		return (1);
