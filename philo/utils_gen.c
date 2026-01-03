@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_gen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 10:43:04 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/12/28 11:45:14 by jkarippa         ###   ########.fr       */
+/*   Updated: 2026/01/03 11:57:23 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	terminate(t_table *table)
 // 	if (table->arr_of_philo)
 // 	{
 // 		free(table->arr_of_philo);
-// 		printf("\033[32m\nDeallocated memory for the array of philosopher in the 
+// 		printf("\033[32m\nDeallocated memory for the array of philosopher in the
 // table\033[0m");
 // 	}
 // }
