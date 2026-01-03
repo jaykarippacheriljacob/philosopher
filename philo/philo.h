@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 20:41:27 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/12/28 16:04:06 by jkarippa         ###   ########.fr       */
+/*   Updated: 2026/01/03 09:20:40 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@
 # define THINK_TIME 1e5
 
 /*
-** OPCODE for philosopher status 
+** OPCODE for philosopher status
 */
 
 typedef enum e_philostatus
 {
 	FORK_1,
-	FORK_2,	
+	FORK_2,
 	EAT,
 	SLEEP,
 	THINK,
@@ -57,9 +57,9 @@ typedef enum e_opcode
 */
 typedef struct s_fork
 {
-	int				fork_id;
-	pthread_mutex_t	fork;
-}					t_fork;
+	int					fork_id;
+	pthread_mutex_t		fork;
+}						t_fork;
 
 /*
 ** Structure declaration
@@ -80,16 +80,16 @@ typedef struct s_table	t_table;
 */
 typedef struct s_philo
 {
-	int				philo_id;
-	pthread_t		thread_id;
-	t_table			*table;
-	t_fork			*lft_fork;
-	t_fork			*rgt_fork;
-	long			meal_counter;
-	long			last_meal_time;
-	int				full;
-	pthread_mutex_t	philo_mutex;
-}					t_philo;
+	int					philo_id;
+	pthread_t			thread_id;
+	t_table				*table;
+	t_fork				*lft_fork;
+	t_fork				*rgt_fork;
+	long				meal_counter;
+	long				last_meal_time;
+	int					full;
+	pthread_mutex_t		philo_mutex;
+}						t_philo;
 
 /*
 ** Defining the structure for the table information
@@ -121,6 +121,7 @@ typedef struct s_table
 	long				time_to_sleep;
 	long				nbr_of_times_each_philo_mus_eat;
 	long				sim_start;
+	long				no_of_threads_running;
 	bool				sim_end;
 	bool				all_threads_ready;
 	pthread_t			monitor;
@@ -142,6 +143,8 @@ int						data_init(t_table *table);
 void					terminate(t_table *table);
 void					create_n_dine_philosophers(t_table *table);
 void					wait_all_threads(t_table *table);
+void					*monitor_philo(void *data);
+void					*alone_philo(void *data);
 void					write_status(t_philo_status status, t_philo *philo);
 long					get_time(int type);
 void					*simulate_philo(void *data);
@@ -154,4 +157,6 @@ int						safe_mutex(pthread_mutex_t *mutex, t_opcode code);
 int						safe_thread(pthread_t *thread, void *(*func)(void *),
 							void *data, t_opcode code);
 bool					simulation_finished(t_table *table);
+bool					all_threads_running(pthread_mutex_t *mutex,
+							long *no_of_threads_running, long nbr_of_philo);
 #endif

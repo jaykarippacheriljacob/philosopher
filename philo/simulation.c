@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 17:43:45 by jkarippa          #+#    #+#             */
-/*   Updated: 2025/12/28 14:30:46 by jkarippa         ###   ########.fr       */
+/*   Updated: 2026/01/03 12:19:42 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@ void	create_n_dine_philosophers(t_table *table)
 	else if (table->nbr_of_philo <= 0)
 		return ;
 	else if (table->nbr_of_philo == 1)
-		printf("Ohoooooo only 1 philo so only 1 fork!!! I will die!!!!\n");
+	{
+		safe_thread(&table->arr_of_philo[0].thread_id,
+			alone_philo, &table->arr_of_philo[0], CREATE);
+	}
 	else
 	{
 		i = -1;
@@ -33,15 +36,15 @@ void	create_n_dine_philosophers(t_table *table)
 			safe_thread(&table->arr_of_philo[i].thread_id, simulate_philo,
 				&table->arr_of_philo[i], CREATE);
 	}
-	// Monitoring the philosophers in a separate function
-	// safe_thread(&table->monitor, monitor_philo, table, CREATE);
 	table->sim_start = get_time(2);
 	safe_mutex(&table->table_mutex, LOCK);
 	table->all_threads_ready = true;
 	safe_mutex(&table->table_mutex, UNLOCK);
+	safe_thread(&table->monitor, monitor_philo, table, CREATE);
 	i = -1;
 	while (++i < table->nbr_of_philo)
 		safe_thread(&table->arr_of_philo[i].thread_id, NULL, NULL, JOIN);
+	safe_thread(&table->monitor, NULL, NULL, JOIN);
 }
 // void	create_philosophers(t_table *table)
 // {
@@ -87,6 +90,27 @@ void	create_n_dine_philosophers(t_table *table)
 // 	safe_mutex(mutex, UNLOCK);
 // 	return (ret);
 // }
+
+/*
+** Function to simulate the dinning problem for one philosopher alone (edge case)
+*/
+void	*alone_philo(void *data)
+{
+	t_philo	*philo;
+
+	philo = (t_philo *)data;
+	wait_all_threads(philo->table);
+	safe_mutex(&philo->philo_mutex, LOCK);
+	philo->last_meal_time = get_time(2);
+	safe_mutex(&philo->philo_mutex, UNLOCK);
+	safe_mutex(&philo->table->table_mutex, LOCK);
+	philo->table->no_of_threads_running++;
+	safe_mutex(&philo->table->table_mutex, UNLOCK);
+	write_status(FORK_1, philo);
+	while (!simulation_finished(philo->table))
+		;
+	return (NULL);
+}
 
 /*
 **	Function for the eat routine of a philosopher
@@ -135,6 +159,12 @@ void	*simulate_philo(void *data)
 
 	philo = (t_philo *)data;
 	wait_all_threads(philo->table);
+	safe_mutex(&philo->philo_mutex, LOCK);
+	philo->last_meal_time = get_time(2);
+	safe_mutex(&philo->philo_mutex, UNLOCK);
+	safe_mutex(&philo->table->table_mutex, LOCK);
+	philo->table->no_of_threads_running++;
+	safe_mutex(&philo->table->table_mutex, UNLOCK);
 	while (!simulation_finished(philo->table))
 	{
 		if (philo->full)
@@ -142,7 +172,6 @@ void	*simulate_philo(void *data)
 		eat(philo);
 		write_status(SLEEP, philo);
 		usleep(philo->table->time_to_sleep * 1000);
-		// precise_usleep(philo->table->time_to_sleep, philo->table);
 		think(philo);
 	}
 	return (NULL);
