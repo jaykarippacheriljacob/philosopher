@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 17:43:45 by jkarippa          #+#    #+#             */
-/*   Updated: 2026/02/20 12:44:11 by jkarippa         ###   ########.fr       */
+/*   Updated: 2026/02/20 13:17:37 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,8 +170,6 @@ void	*simulate_philo(void *data)
 	safe_mutex(&philo->table->table_mutex, UNLOCK);
 	while (!simulation_finished(philo->table))
 	{
-		// if (philo->full)
-		// 	break ;
 		eat(philo);
 		if (simulation_finished(philo->table))
 			break ;
