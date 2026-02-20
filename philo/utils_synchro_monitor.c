@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 16:36:27 by jkarippa          #+#    #+#             */
-/*   Updated: 2026/02/20 13:13:17 by jkarippa         ###   ########.fr       */
+/*   Updated: 2026/02/20 14:01:39 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,24 +36,6 @@
 // }
 
 /*
-** Function to check if the simulation has finished
-** i.e., if a philosopher has died or all philosophers are full
-*/
-bool	simulation_finished(t_table *table)
-{
-	bool	finished;
-
-	safe_mutex(&table->table_mutex, LOCK);
-	finished = table->sim_end;
-	safe_mutex(&table->table_mutex, UNLOCK);
-	return (finished);
-}
-// bool	simulation_finished(t_table *table)
-// {
-// 	return (get_bool(&table->table_mutex, &table->sim_end));
-// }
-
-/*
 ** SpinLock to synchornize all philosophers to start at the same time
 */
 void	wait_all_threads(t_table *table)
@@ -71,7 +53,7 @@ void	wait_all_threads(t_table *table)
 }
 
 /*
-**
+** Helper function for the monitor thread to check if a philosopher is dead
 */
 static bool	philo_dead(t_philo *philo)
 {
@@ -94,7 +76,8 @@ static bool	philo_dead(t_philo *philo)
 }
 
 /*
-** 
+** Function to check if all philosopher threads are running
+** before the monitor starts
 */
 bool	all_threads_running(pthread_mutex_t *mutex,
 							long *no_of_threads_running, long nbr_of_philo)
@@ -108,6 +91,24 @@ bool	all_threads_running(pthread_mutex_t *mutex,
 		all_running = false;
 	safe_mutex(mutex, UNLOCK);
 	return (all_running);
+}
+
+/*
+** Helper funciton to refractor the monitor thread function
+** and to safely set the sim_end boolean and write the death status without
+** race conditions
+*/
+static void	set_sim_end(t_table *table, int i)
+{
+	safe_mutex(&table->table_mutex, LOCK);
+	if (!table->sim_end)
+	{
+		table->sim_end = true;
+		safe_mutex(&table->table_mutex, UNLOCK);
+		write_status(DIED, table->arr_of_philo + i);
+	}
+	else
+		safe_mutex(&table->table_mutex, UNLOCK);
 }
 
 /*
@@ -129,17 +130,7 @@ void	*monitor_philo(void *data)
 		while (++i < table->nbr_of_philo)
 		{
 			if (philo_dead(table->arr_of_philo + i))
-			{
-				safe_mutex(&table->table_mutex, LOCK);
-				if (!table->sim_end)
-				{
-					table->sim_end = true;
-					safe_mutex(&table->table_mutex, UNLOCK);
-					write_status(DIED, table->arr_of_philo + i);
-				}
-				else
-					safe_mutex(&table->table_mutex, UNLOCK);
-			}
+				set_sim_end(table, i);
 		}
 		check_all_full(table);
 		usleep(1000);
