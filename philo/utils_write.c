@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 13:56:17 by jkarippa          #+#    #+#             */
-/*   Updated: 2026/01/03 11:25:38 by jkarippa         ###   ########.fr       */
+/*   Updated: 2026/02/20 16:15:11 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,28 +18,28 @@
 ** 1. usleep the major part of the time, not CPU intensive
 ** 2. refine last microsec with spinlock. 
 */
-void	precise_usleep(long msec, t_table *table)
-{
-	long	start;
-	long	remaining;
-	long	elapsed;
+// void	precise_usleep(long msec, t_table *table)
+// {
+// 	long	start;
+// 	long	remaining;
+// 	long	elapsed;
 
-	start = get_time(2);
-	while (get_time(2) - start < msec)
-	{
-		if (simulation_finished(table))
-			break ;
-		elapsed = get_time(2) - start;
-		remaining = msec - elapsed;
-		if (remaining > 10)
-			usleep((remaining / 2) * 1000);
-		else
-		{
-			while (get_time(2) - start < msec)
-				;
-		}
-	}
-}
+// 	start = get_time(2);
+// 	while (get_time(2) - start < msec)
+// 	{
+// 		if (simulation_finished(table))
+// 			break ;
+// 		elapsed = get_time(2) - start;
+// 		remaining = msec - elapsed;
+// 		if (remaining > 10)
+// 			usleep((remaining / 2) * 1000);
+// 		else
+// 		{
+// 			while (get_time(2) - start < msec)
+// 				;
+// 		}
+// 	}
+// }
 
 /*
 ** Utility function to print the status of a philosopher.

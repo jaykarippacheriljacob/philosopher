@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 17:43:45 by jkarippa          #+#    #+#             */
-/*   Updated: 2026/02/20 13:36:11 by jkarippa         ###   ########.fr       */
+/*   Updated: 2026/02/20 16:30:34 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ void	create_n_dine_philosophers(t_table *table)
 	{
 		sub_create_n_dine_philosophers(table);
 	}
-	table->sim_start = get_time(2);
 	safe_mutex(&table->table_mutex, LOCK);
+	table->sim_start = get_time(2);
 	table->all_threads_ready = true;
 	safe_mutex(&table->table_mutex, UNLOCK);
 	safe_thread(&table->monitor, monitor_philo, table, CREATE);
