@@ -133,7 +133,7 @@ void	*monitor_philo(void *data)
 				set_sim_end(table, i);
 		}
 		check_all_full(table);
-		usleep(1000);
+		usleep(100);
 	}
 	return (NULL);
 }

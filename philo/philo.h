@@ -146,6 +146,7 @@ void					wait_all_threads(t_table *table);
 void					*monitor_philo(void *data);
 void					*alone_philo(void *data);
 void					write_status(t_philo_status status, t_philo *philo);
+void					precise_usleep(long msec, t_table *table);
 long					get_time(int type);
 void					*simulate_philo(void *data);
 void					check_all_full(t_table *table);
