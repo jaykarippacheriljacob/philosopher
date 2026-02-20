@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 17:43:45 by jkarippa          #+#    #+#             */
-/*   Updated: 2026/01/03 12:19:42 by jkarippa         ###   ########.fr       */
+/*   Updated: 2026/02/20 12:44:11 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,16 +120,19 @@ void	*alone_philo(void *data)
 */
 static void	eat(t_philo *philo)
 {
-	safe_mutex(&philo->lft_fork->fork, LOCK);
-	write_status(FORK_1, philo);
-	safe_mutex(&philo->rgt_fork->fork, LOCK);
-	write_status(FORK_2, philo);
-	safe_mutex(&philo->philo_mutex, LOCK);
-	philo->last_meal_time = get_time(2);
-	philo->meal_counter++;
-	safe_mutex(&philo->philo_mutex, UNLOCK);
-	write_status(EAT, philo);
-	usleep(philo->table->time_to_eat * 1000);
+	if (!philo->full)
+	{
+		safe_mutex(&philo->lft_fork->fork, LOCK);
+		write_status(FORK_1, philo);
+		safe_mutex(&philo->rgt_fork->fork, LOCK);
+		write_status(FORK_2, philo);
+		safe_mutex(&philo->philo_mutex, LOCK);
+		philo->last_meal_time = get_time(2);
+		philo->meal_counter++;
+		safe_mutex(&philo->philo_mutex, UNLOCK);
+		write_status(EAT, philo);
+		usleep(philo->table->time_to_eat * 1000);
+	}
 	if (philo->table->nbr_of_times_each_philo_mus_eat > 0
 		&& philo->meal_counter >= philo->table->nbr_of_times_each_philo_mus_eat)
 	{
@@ -167,9 +170,11 @@ void	*simulate_philo(void *data)
 	safe_mutex(&philo->table->table_mutex, UNLOCK);
 	while (!simulation_finished(philo->table))
 	{
-		if (philo->full)
-			break ;
+		// if (philo->full)
+		// 	break ;
 		eat(philo);
+		if (simulation_finished(philo->table))
+			break ;
 		write_status(SLEEP, philo);
 		usleep(philo->table->time_to_sleep * 1000);
 		think(philo);

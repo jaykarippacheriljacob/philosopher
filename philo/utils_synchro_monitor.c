@@ -6,7 +6,7 @@
 /*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 16:36:27 by jkarippa          #+#    #+#             */
-/*   Updated: 2026/01/03 11:35:10 by jkarippa         ###   ########.fr       */
+/*   Updated: 2026/02/20 13:13:17 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,8 @@ bool	all_threads_running(pthread_mutex_t *mutex,
 }
 
 /*
-**
+** Function for the monitor thread to check for philosopher's death and
+** end the simulation
 */
 void	*monitor_philo(void *data)
 {
@@ -140,6 +141,8 @@ void	*monitor_philo(void *data)
 					safe_mutex(&table->table_mutex, UNLOCK);
 			}
 		}
+		check_all_full(table);
+		usleep(1000);
 	}
 	return (NULL);
 }

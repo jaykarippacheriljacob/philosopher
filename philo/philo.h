@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 20:41:27 by jkarippa          #+#    #+#             */
-/*   Updated: 2026/01/03 09:20:40 by codespace        ###   ########.fr       */
+/*   Updated: 2026/02/20 12:55:25 by jkarippa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,7 @@ void					*alone_philo(void *data);
 void					write_status(t_philo_status status, t_philo *philo);
 long					get_time(int type);
 void					*simulate_philo(void *data);
+void					check_all_full(t_table *table);
 /*
 ** Wrapper functions for safe use of  malloc, mutex and threads.
 */
