@@ -6,7 +6,7 @@
 #    By: jkarippa <jkarippa@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/27 15:25:06 by jkarippa          #+#    #+#              #
-#    Updated: 2026/02/20 13:28:41 by jkarippa         ###   ########.fr        #
+#    Updated: 2026/02/22 13:21:25 by jkarippa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,8 @@ bonus:	all	$(BNAME)
 # Linking the object files into the final executable
 $(BNAME):	$(BOBJ)
 	$(CC)	$(CFLAGS)	-o	$(BNAME)	$(BOBJ)
+helgrind:
+	valgrind --tool=helgrind --fair-sched=yes ./philo 5 800 200 200 7
 # Clean object files
 clean:
 	rm	-f	$(OBJ)
@@ -48,10 +50,12 @@ re:	fclean all
 # Specify what happens when the Makefile is executed
 help:
 	@echo "Makefile for $(NAME)"
+	@echo ""
 	@echo "Usage:"
-	@echo "  make          					Build the project"
-	@echo "  make bonus    					-"
-	@echo "  make clean    					Removes all object files"
-	@echo "  make fclean   					Removes all object files, executables and the library"
-	@echo "  make re       					Rebuild the project"
-	@echo "  make help     					Display this help message"
+	@echo "  make           Build the project"
+	@echo "  make bonus     -"
+	@echo "  make clean     Remove all object files"
+	@echo "  make fclean    Remove object files and executable"
+	@echo "  make re        Rebuild the project"
+	@echo "  make help      Display this help message"
+	@echo "  make helgrind  Run Helgrind test (5 800 200 200 7)"
